@@ -1,21 +1,20 @@
 import pandas as pd
 
-from sklearn.metrics import classification_report
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
+from sklearn.svm import LinearSVC
+from sklearn.metrics import accuracy_score, classification_report
 
 # Load cleaned dataset
 df = pd.read_csv("dataset/cleaned_train.csv")
 
-# Inputs (sentences)
+# Input text
 X = df["text"]
 
-# Outputs (emotion labels)
+# Emotion labels
 y = df["emotion"]
 
-# STEP 1: Split RAW TEXT first (No Data Leakage)
+# Split raw text first (No Data Leakage)
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
@@ -24,32 +23,32 @@ X_train, X_test, y_train, y_test = train_test_split(
     stratify=y
 )
 
-# STEP 2: Create TF-IDF Vectorizer
+# TF-IDF Vectorization
 vectorizer = TfidfVectorizer(
     ngram_range=(1, 2),
     min_df=2,
     max_df=0.95
 )
 
-# STEP 3: Learn vocabulary ONLY from training data
+# Learn vocabulary only from training data
 X_train_tfidf = vectorizer.fit_transform(X_train)
 
-# STEP 4: Apply same vocabulary to test data
+# Apply same vocabulary to test data
 X_test_tfidf = vectorizer.transform(X_test)
 
-# STEP 5: Create Model
-model = LogisticRegression(
-    max_iter=1000,
-    class_weight="balanced"
+# Create SVM Model
+model = LinearSVC(
+    class_weight="balanced",
+    random_state=42
 )
 
-# STEP 6: Train Model
+# Train Model
 model.fit(X_train_tfidf, y_train)
 
-# STEP 7: Predict
+# Predict
 predictions = model.predict(X_test_tfidf)
 
-# STEP 8: Accuracy
+# Accuracy
 accuracy = accuracy_score(y_test, predictions)
 
 print("Model Accuracy:", round(accuracy * 100, 2), "%")
