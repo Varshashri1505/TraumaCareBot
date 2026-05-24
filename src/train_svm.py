@@ -1,5 +1,6 @@
 import pandas as pd
 
+from sklearn.calibration import CalibratedClassifierCV
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.svm import LinearSVC
@@ -37,11 +38,15 @@ X_train_tfidf = vectorizer.fit_transform(X_train)
 X_test_tfidf = vectorizer.transform(X_test)
 
 # Create SVM Model
-model = LinearSVC(
+base_model = LinearSVC(
     class_weight="balanced",
     random_state=42
 )
 
+model = CalibratedClassifierCV(
+    estimator=base_model,
+    cv=5
+)
 # Train Model
 model.fit(X_train_tfidf, y_train)
 

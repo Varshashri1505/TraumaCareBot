@@ -1,6 +1,7 @@
 import pandas as pd
 import joblib
 
+from sklearn.calibration import CalibratedClassifierCV
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.svm import LinearSVC
@@ -31,9 +32,14 @@ vectorizer = TfidfVectorizer(
 X_train_tfidf = vectorizer.fit_transform(X_train)
 
 # Best model
-model = LinearSVC(
+base_model = LinearSVC(
     class_weight="balanced",
     random_state=42
+)
+
+model = CalibratedClassifierCV(
+    estimator=base_model,
+    cv=5
 )
 
 # Train
