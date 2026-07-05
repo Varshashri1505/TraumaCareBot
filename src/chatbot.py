@@ -1,6 +1,7 @@
 import joblib
 from context_detector import detect_context
 from response_generator import get_response
+from memory import remember, get_history
 
 # Load saved vectorizer
 vectorizer = joblib.load("models/tfidf_vectorizer.pkl")
@@ -15,6 +16,7 @@ print("Type 'exit' to quit.\n")
 while True:
 
     text = input("You: ")
+    remember(text)
 
     if text.lower() == "exit":
         print("TraumaCare Bot: Take care and have a good day!")
@@ -38,5 +40,8 @@ while True:
     print("Detected Context:", context)   
     
     reply = get_response(emotion, context)
+
+    print("\nConversation History:")
+    print(get_history())
 
     print("TraumaCare Bot:", reply)
