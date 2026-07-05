@@ -16,37 +16,65 @@ trauma_keywords = {
         "hopeless",
         "worthless",
         "empty",
-        "lonely"
+        "lonely",
+        "helpless",
+        "nothing matters",
+        "lost hope",
+        "giving up"
     ],
 
     "anxiety": [
         "anxiety",
         "anxious",
         "panic",
+        "panicking",
         "worried",
+        "worry",
         "nervous",
         "tense",
-        "scared"
+        "afraid",
+        "scared",
+        "frightened"
     ],
 
     "surgery": [
         "surgery",
         "operation",
-        "procedure"
+        "procedure",
+        "operate",
+        "operated",
+        "surgeon",
+        "stitches",
+        "stitch",
+        "operation theatre"
     ],
 
     "hospital": [
         "hospital",
         "doctor",
+        "doctors",
         "nurse",
         "clinic",
-        "ward"
+        "ward",
+        "icu",
+        "admitted",
+        "admission",
+        "patient",
+        "medical"
     ],
 
     "injury": [
         "injury",
-        "wound",
+        "injured",
+        "hurt",
+        "hurts",
+        "pain",
+        "painful",
         "fracture",
+        "broken",
+        "sprain",
+        "cut",
+        "wound",
         "bleeding",
         "burn"
     ],
@@ -59,10 +87,16 @@ trauma_keywords = {
     ],
 
     "recovery": [
+       
+        "recover",
         "recovery",
+        "recovering",
         "healing",
-        "rehabilitation"
+        "heal",
+        "better",
+        "improving"
     ],
+    
 
     "accident": [
         "accident",
