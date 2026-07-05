@@ -16,7 +16,6 @@ print("Type 'exit' to quit.\n")
 while True:
 
     text = input("You: ")
-    remember(text)
 
     if text.lower() == "exit":
         print("TraumaCare Bot: Take care and have a good day!")
@@ -32,16 +31,26 @@ while True:
 
     context = detect_context(text)
 
+
     print("\nDetected Emotion:", emotion)
 
     print("Confidence:",
-        round(confidence, 2), "%")
-
-    print("Detected Context:", context)   
+        round(confidence, 2), "%")   
     
-    reply = get_response(emotion, context)
+    print("Detected Context:", context)
 
-    print("\nConversation History:")
-    print(get_history())
+    history = get_history()
+
+    reply = get_response(
+        emotion,
+        context,
+        history
+    )
 
     print("TraumaCare Bot:", reply)
+
+    remember(
+    text,
+    emotion,
+    context
+)

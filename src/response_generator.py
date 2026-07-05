@@ -34,19 +34,41 @@ context_responses = {
     "It is completely normal to feel nervous before surgery. Many people experience anxiety before medical procedures.",
 
     "hospital":
-    "Hospital visits can be stressful. Make sure to follow your doctor's advice and take care of yourself.",
+    "Hospital situations can be emotionally stressful. Stay in touch with the medical team, support your loved one if applicable, and remember to take care of yourself during this difficult time.",
 
     "injury":
     "Recovering from an injury takes time. Be patient with yourself and follow the recommended treatment plan.",
 
     "recovery":
-    "Recovery is a journey. Every small step forward is progress and should be appreciated."
+    "Recovery is a journey. Every small step forward is progress and should be appreciated.",
+
+    "pain":
+    "It sounds like you're experiencing pain. If it becomes severe or doesn't improve, please consult a healthcare professional and take proper rest."
 }
 
-def get_response(emotion, context):
+def get_response(emotion, context, history):
+
+    # If current context is general,
+    # use the last meaningful context
+
+    if context == "general":
+
+        for item in reversed(history):
+
+            if (
+                item["context"] != "general" and item["context"] in context_responses
+            ):
+
+                return (
+                    "Based on what you shared earlier, " + context_responses[item["context"]]
+                )
+    # Context-based response
 
     if context in context_responses:
+
         return context_responses[context]
+
+    # Emotion-based response
 
     return responses.get(
         emotion,
