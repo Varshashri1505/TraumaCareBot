@@ -1,5 +1,6 @@
 import joblib
 from config import DEBUG, VOICE_MODE
+from voice_output import speak
 from voice_input import listen
 from context_detector import detect_context
 from response_generator import get_response
@@ -19,6 +20,7 @@ while True:
 
     if VOICE_MODE:
         text = listen()
+        print("DEBUG - Returned from listen():", text)
 
         # If speech wasn't recognized, listen again
         if text == "":
@@ -59,8 +61,14 @@ while True:
 
     print("TraumaCare Bot:", reply)
 
+    print("Before speaking...")
+    speak(reply)
+    print("After speaking...")
+
     remember(
         text,
         emotion,
         context
     )
+
+    print("Loop completed.")
