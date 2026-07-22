@@ -1,4 +1,6 @@
 import joblib
+from config import DEBUG, VOICE_MODE
+from voice_input import listen
 from context_detector import detect_context
 from response_generator import get_response
 from memory import remember, get_history
@@ -15,7 +17,14 @@ print("Type 'exit' to quit.\n")
 
 while True:
 
-    text = input("You: ")
+    if VOICE_MODE:
+        text = listen()
+
+        # If speech wasn't recognized, listen again
+        if text == "":
+            continue
+    else:
+        text = input("You: ")
 
     if text.lower() == "exit":
         print("TraumaCare Bot: Take care and have a good day!")
@@ -32,12 +41,13 @@ while True:
     context = detect_context(text)
 
 
-    print("\nDetected Emotion:", emotion)
+    if DEBUG:
+        print("\nDetected Emotion:", emotion)
 
-    print("Confidence:",
-        round(confidence, 2), "%")   
-    
-    print("Detected Context:", context)
+        print("Confidence:",
+            round(confidence, 2), "%")
+
+        print("Detected Context:", context)
 
     history = get_history()
 
@@ -50,7 +60,7 @@ while True:
     print("TraumaCare Bot:", reply)
 
     remember(
-    text,
-    emotion,
-    context
-)
+        text,
+        emotion,
+        context
+    )
