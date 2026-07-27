@@ -1,4 +1,5 @@
 import random
+from features.conversation_state import get_topic
 
 responses = {
 
@@ -114,6 +115,21 @@ def get_response(emotion, context, history):
 
     if context == "general":
 
+        topic = get_topic()
+
+        if topic and topic in context_responses:
+
+            previous_response = context_responses[topic]
+
+            if isinstance(previous_response, list):
+                previous_response = random.choice(previous_response)
+
+            return (
+                f"Earlier, you mentioned your {topic}. "
+                + previous_response
+            )
+
+        # Fallback to history if no active topic
         for item in reversed(history):
 
             if (
@@ -126,7 +142,10 @@ def get_response(emotion, context, history):
                 if isinstance(previous_response, list):
                     previous_response = random.choice(previous_response)
 
-                return "Based on what you shared earlier, " + previous_response
+                return (
+                    f"Earlier, you mentioned your {item['context']}. "
+                    + previous_response
+                )
     # Context-based response
 
     if context in context_responses:
