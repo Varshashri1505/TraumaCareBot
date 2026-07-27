@@ -66,10 +66,6 @@ trauma_keywords = {
     "injury": [
         "injury",
         "injured",
-        "hurt",
-        "hurts",
-        "pain",
-        "painful",
         "fracture",
         "broken",
         "sprain",
@@ -81,7 +77,9 @@ trauma_keywords = {
 
     "pain": [
         "pain",
+        "painful",
         "hurt",
+        "hurts",
         "aching",
         "sore"
     ],
