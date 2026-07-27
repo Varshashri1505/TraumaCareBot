@@ -1,10 +1,10 @@
 import joblib
 from config import DEBUG, VOICE_MODE
-from voice_output import speak
-from voice_input import listen
-from context_detector import detect_context
-from response_generator import get_response
-from memory import remember, get_history
+from voice.voice_output import speak
+from voice.voice_input import listen
+from ai.context_detector import detect_context
+from ai.response_generator import get_response
+from ai.memory import remember, get_history
 
 # Load saved vectorizer
 vectorizer = joblib.load("models/tfidf_vectorizer.pkl")
@@ -13,8 +13,11 @@ vectorizer = joblib.load("models/tfidf_vectorizer.pkl")
 model = joblib.load("models/emotion_model.pkl")
 
 
-print("=== TraumaCare Bot ===")
-print("Type 'exit' to quit.\n")
+print("═══════════════════════════════════════")
+print("🤖 TraumaCare Recovery Companion")
+print("I'm here to support you during your recovery.")
+print("═══════════════════════════════════════")
+
 
 while True:
 
@@ -29,7 +32,11 @@ while True:
         text = input("You: ")
 
     if text.lower() == "exit":
-        print("TraumaCare Bot: Take care and have a good day!")
+        goodbye = "Take care and have a good day! I wish you a smooth recovery."
+
+        print("TraumaCare Bot:", goodbye)
+        speak(goodbye)
+
         break
 
     text_vector = vectorizer.transform([text])
@@ -60,10 +67,7 @@ while True:
     )
 
     print("TraumaCare Bot:", reply)
-
-    print("Before speaking...")
     speak(reply)
-    print("After speaking...")
 
     remember(
         text,
