@@ -3,5 +3,10 @@
         "medicine": "paracetamol",
         "time": "6:00 p.m.",
         "frequency": "every 8"
+    },
+    {
+        "medicine": "paracetamol",
+        "time": "8:00 p.m.",
+        "frequency": "for every 4 hours"
     }
 ]
